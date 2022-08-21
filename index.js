@@ -3,6 +3,7 @@ const hbs = require("hbs");
 const wax = require("wax-on");
 // const homepageRoutes = require('./routes/homepage');
 require("dotenv").config();
+var cors = require('cors')
 
 
 // create an instance of express app
@@ -13,6 +14,8 @@ app.set("view engine", "hbs");
 
 // static folder
 app.use(express.static("public"));
+
+app.use(cors())
 
 // setup wax-on
 wax.on(hbs.handlebars);
@@ -27,10 +30,11 @@ app.use(
 
 
 const homepageRoutes = require('./routes/homepage');
+const serverRoute = require('./routes/server');
 
 async function main() {
-  app.use('/', homepageRoutes);
-  console.log("welcome to homepage")
+  app.use('/', serverRoute);
+  app.use('/homepage', homepageRoutes);
 }
 
 main();
