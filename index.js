@@ -35,11 +35,14 @@ const serverRoute = require('./routes/server');
 async function main() {
   app.use('/', serverRoute);
   app.use('/homepage', homepageRoutes);
+
 }
 
 main();
 
+
+
 app.listen(3000, () => {
-  console.log("Server has started");
+  console.log("Server has started on port 3000");
 });
 

@@ -15,16 +15,18 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('products',{
+  return db.createTable('allhanfuVer2',{
       id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned: true},
       name: { type: 'string', length:100, notNull:false},
-      cost: 'int', 2,
-      description : 'text'
+      cost: 'decimal', 
+      description:'text',
+      review:'int',
+      category:'text'
   })
 };
 
-exports.down = function(db) {
-  return db.dropTable('products');
+exports.down = function (db) {
+  return db.dropTable('allhanfu');
 };
 
 exports._meta = {

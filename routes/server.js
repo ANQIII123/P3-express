@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router(); // #1 - Create a new express Router
 
+const { All_hanfu } = require('../models')
 
 //  #2 Add a new route to the Express router
-router.get('/', (req,res)=>{
-    res.send('this is a response')
+router.get('/', async (req,res)=>{
+    res.send('hanfu server')
 })
 
 
@@ -15,10 +16,9 @@ router.get('/', (req,res)=>{
   
 router.get('/allHanfu', async (req,res)=>{
 
-    let allHanfu = [{name:'hanfu 1',price:20},{name:'hanfu 2',price:40}]
-    // let allHanfu = await Hanfu.fetch({require:true});
-
-    res.send(allHanfu)
+    // let allHanfu = [{name:'hanfu 1',price:20},{name:'hanfu 2',price:40}]
+    let hanfu = await All_hanfu.collection().fetch();
+    res.send(hanfu.toJSON()) 
 })
 
 
