@@ -4,4 +4,9 @@ const All_hanfu = bookshelf.model('All_hanfu', {
     tableName:'allhanfu'
 });
 
-module.exports = { All_hanfu };
+const Users = bookshelf.model('Users', {
+    tableName:'users'
+});
+
+
+module.exports = { All_hanfu,Users };

@@ -3,7 +3,10 @@ const hbs = require("hbs");
 const wax = require("wax-on");
 // const homepageRoutes = require('./routes/homepage');
 require("dotenv").config();
-var cors = require('cors')
+
+var cors = require('cors');
+const bodyParser = require('body-parser');
+
 
 
 // create an instance of express app
@@ -16,6 +19,7 @@ app.set("view engine", "hbs");
 app.use(express.static("public"));
 
 app.use(cors())
+app.use(bodyParser.json());
 
 // setup wax-on
 wax.on(hbs.handlebars);
