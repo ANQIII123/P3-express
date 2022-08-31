@@ -6,6 +6,8 @@ require("dotenv").config();
 
 var cors = require('cors');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 
 
 
@@ -21,6 +23,14 @@ app.use(express.static("public"));
 app.use(cors())
 app.use(bodyParser.json());
 
+// set up sessions
+app.use(session({
+  store: new FileStore(),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
+
 // setup wax-on
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
@@ -35,6 +45,8 @@ app.use(
 
 const homepageRoutes = require('./routes/homepage');
 const serverRoute = require('./routes/server');
+
+
 
 async function main() {
   app.use('/', serverRoute);
