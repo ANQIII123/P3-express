@@ -9,8 +9,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
-
-
 // create an instance of express app
 let app = express();
 

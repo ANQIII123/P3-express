@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router(); // #1 - Create a new express Router
 
+const CartServices = require("../services/cart_services")
 const { All_hanfu, Users } = require('../models')
 
 //  #2 Add a new route to the Express router
@@ -13,9 +14,26 @@ router.get('/', async (req, res) => {
 //     tableName: 'hanfu'
 //   })
 
+router.post('/cart', async (req, res) => {
+    if (req.body.user) {
+        let cart = new CartServices(req.body.user.id);
+        res.send({
+            'shoppingCart': (await cart.getCart()).toJSON()
+        })
+    }else{
+        res.sendStatus(400)
+    }
+})
+
+router.post('/:hanfu_id/add', async (req,res)=>{
+    let cart = new CartServices(req.body.user.id);
+    await cart.addToCart(req.params.hanfu_id, 1);
+    console.log(cart)
+    res.sendStatus(200)
+})
+
 
 router.get('/allHanfu', async (req, res) => {
-
     let hanfu = await All_hanfu.collection().fetch();
     res.send(hanfu.toJSON())
 })
@@ -28,7 +46,7 @@ router.post('/register', async (req, res) => {
     user.set('password', req.body.password);
     await user.save();
 
-    console.log(email, userName, password)
+    console.log('registered', email, userName, password)
     res.status(200)
     res.send(req.body.email)
 })
@@ -59,7 +77,8 @@ router.post('/login', async (req, res) => {
                 username: user.get('username'),
                 email: user.get('email')
             }
-            res.send({username:req.session.user.username,email:req.session.user.email})
+            req.session.save()
+            res.send([true, { user: req.session.user }])
             return
 
         } else {
